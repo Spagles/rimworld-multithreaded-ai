@@ -55,9 +55,12 @@ namespace PawnAIMultithread.Core
                 Monitor.PulseAll(QueueLock);
             }
 
-            foreach (var thread in _pathfindingThreads)
+            if (_pathfindingThreads != null)
             {
-                thread?.Join(5000);
+                foreach (var thread in _pathfindingThreads)
+                {
+                    thread?.Join(5000);
+                }
             }
 
             Log.Message($"[PawnAI Multithread] Статистика: обработано {_tasksProcessed} маршрутов, попаданий кэша: {_cacheHits}");
