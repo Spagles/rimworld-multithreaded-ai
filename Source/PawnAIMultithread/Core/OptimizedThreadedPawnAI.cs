@@ -56,17 +56,26 @@ namespace PawnAIMultithread.Core
         {
             _threadsRunning = false;
 
-            foreach (var queueLock in _queueLocks)
+            if (_queueLocks != null)
             {
-                lock (queueLock)
+                foreach (var queueLock in _queueLocks)
                 {
-                    Monitor.PulseAll(queueLock);
+                    if (queueLock != null)
+                    {
+                        lock (queueLock)
+                        {
+                            Monitor.PulseAll(queueLock);
+                        }
+                    }
                 }
             }
 
-            foreach (var thread in _aiThreads)
+            if (_aiThreads != null)
             {
-                thread?.Join(5000);
+                foreach (var thread in _aiThreads)
+                {
+                    thread?.Join(5000);
+                }
             }
 
             Log.Message($"[PawnAI Multithread] Обработано обновлений ИИ: {_aiUpdatesProcessed}");
