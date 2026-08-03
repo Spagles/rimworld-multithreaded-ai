@@ -5,7 +5,7 @@ using PawnAIMultithread.Core;
 
 namespace PawnAIMultithread.Patches
 {
-    [HarmonyPatch(typeof(Game), nameof(Game.LoadGame))]
+    [HarmonyPatch(typeof(Game), nameof(Game.FinalizeInit))]
     public static class OptimizedGameLoadPatch
     {
         public static void Postfix()
