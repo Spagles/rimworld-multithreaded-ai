@@ -77,7 +77,7 @@ namespace PawnAIMultithread.Core
             if (pawn == null || !_threadsRunning)
                 return;
 
-            int queueIndex = pawn.GetHashCode() % AIThreadCount;
+            int queueIndex = Math.Abs(pawn.GetHashCode() % AIThreadCount);
             lock (_queueLocks[queueIndex])
             {
                 _pawnQueues[queueIndex].Enqueue(pawn);
